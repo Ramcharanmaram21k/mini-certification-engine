@@ -1,27 +1,24 @@
+// frontend/src/api/apiClient.ts
 import axios from 'axios';
 import type { AttemptResult, Quiz, User } from '../types';
 
-// Read the API base from Vite env (injected at build time)
-// Make sure the Vercel env key is exactly VITE_API_URL
+// Build-time env from Vite
 const apiBase = import.meta.env.VITE_API_URL as string | undefined;
 
-// In production, fail fast if missing to avoid falling back to localhost
+// Fail fast in production if missing
 if (import.meta.env.PROD && !apiBase) {
   throw new Error('VITE_API_URL is missing in production build');
 }
 
-// Use the deployed URL in prod; localhost only for local dev
-const baseURL = (apiBase || 'http://localhost:3001').replace(/\/+$/, ''); // trim trailing slash if any
-
-// Optional one-time debug (comment out after verifying in prod)
-// console.log('API baseURL:', baseURL);
+// Use deployed URL in prod; localhost for local dev
+const baseURL = (apiBase || 'http://localhost:3001').replace(/\/+$/, ''); // trim trailing slash
 
 export const api = axios.create({
   baseURL: `${baseURL}/api`,
   withCredentials: false,
 });
 
-// Attach token on each request
+// Attach token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
