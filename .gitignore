@@ -1,0 +1,27 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build (Vite/React)
+dist/
+.vite/
+
+# Environment files
+.env
+frontend/.env
+backend/.env
+
+# SQLite databases
+database.db
+*.sqlite
+*.sqlite3
+
+# Editor / OS
+.vscode/
+.DS_Store
+
+# Logs
+logs/
+*.log
